@@ -16,18 +16,16 @@
   </div>
 
   <!-- Portfolio Tabs -->
-  <div class="flex justify-center mb-8 space-x-4">
-    <button class="px-6 py-2 bg-gray-800 hover:bg-gray-700 rounded transition duration-300">All</button>
-    <button class="px-6 py-2 bg-gray-800 hover:bg-gray-700 rounded transition duration-300">Branding</button>
-    <button class="px-6 py-2 bg-gray-800 hover:bg-gray-700 rounded transition duration-300">Web Design</button>
-    <button class="px-6 py-2 bg-gray-800 hover:bg-gray-700 rounded transition duration-300">Social Media</button>
-    <button class="px-6 py-2 bg-gray-800 hover:bg-gray-700 rounded transition duration-300">SEO</button>
+  <div class="flex flex-wrap justify-center mb-8 gap-2 sm:gap-4">
+    <button class="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded transition duration-300 text-sm sm:text-base">All</button>
+    <button class="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded transition duration-300 text-sm sm:text-base">Branding</button>
+    <button class="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded transition duration-300 text-sm sm:text-base">Web Design</button>
+    <button class="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded transition duration-300 text-sm sm:text-base">Social Media</button>
+    <button class="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded transition duration-300 text-sm sm:text-base">SEO</button>
   </div>
 
   <!-- Portfolio Grid -->
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-    <!-- Project Cards with Zoom Effect -->
     {% for project in [
       ('project1.jpg', 'Fashion Brand Campaign', 'A bold branding project for a streetwear label that went viral on Instagram.'),
       ('project2.jpg', 'Restaurant Web Launch', 'A responsive food website built for speed and delicious SEO impact.'),
@@ -47,32 +45,26 @@
       </div>
     </div>
     {% endfor %}
-
   </div>
 
-  <section class="py-12 px-6 text-center bg-gray-800 text-white">
-   <h2 class="text-2xl font-bold mb-6"><span  class="text-yellow-400">Our Clients</span></h2>
-   <div class="flex flex-wrap justify-center gap-6">
-     <!-- Replace with actual logos -->
-     <img src="/static/images/client1.jpg" class="h-12 grayscale hover:grayscale-0 transition" />
-     <img src="/static/images/client2.jpg" class="h-12 grayscale hover:grayscale-0 transition" />
-     <img src="/static/images/client3.jpg" class="h-12 grayscale hover:grayscale-0 transition" />
-     <img src="/static/images/client4.jpg" class="h-12 grayscale hover:grayscale-0 transition" />
-     <img src="/static/images/client5.jpg" class="h-12 grayscale hover:grayscale-0 transition" />
-     <img src="/static/images/client6.jpg" class="h-12 grayscale hover:grayscale-0 transition" />
-     <img src="/static/images/client7.jpg" class="h-12 grayscale hover:grayscale-0 transition" />
-     <img src="/static/images/client8.jpg" class="h-12 grayscale hover:grayscale-0 transition" />
-     <img src="/static/images/client9.jpg" class="h-12 grayscale hover:grayscale-0 transition" />
-   </div>
- </section>
+  <!-- Clients Section -->
+  <section class="py-12 px-6 text-center bg-gray-800 text-white mt-12">
+    <h2 class="text-2xl font-bold mb-6"><span class="text-yellow-400">Our Clients</span></h2>
+    <div class="flex flex-wrap justify-center gap-6">
+      {% for i in range(1, 10) %}
+      <img src="/static/images/client{{ i }}.jpg" class="h-12 grayscale hover:grayscale-0 transition object-contain" />
+      {% endfor %}
+    </div>
+  </section>
 
- <section class="py-12 px-6 text-center bg-gray-700 text-white">
-   <h2 class="text-2xl font-bold mb-6"><span  class="text-yellow-400">What Our Clients Say</span></h2>
-   <div class="max-w-2xl mx-auto">
-     <blockquote class="italic text-lg">"TopMind Agency transformed our brand's online presence. Highly recommended!"</blockquote>
-     <p class="mt-4 font-semibold">— Sarah N., Founder, GreenBite</p>
-   </div>
- </section>
+  <!-- Testimonials Section -->
+  <section class="py-12 px-6 text-center bg-gray-700 text-white">
+    <h2 class="text-2xl font-bold mb-6"><span class="text-yellow-400">What Our Clients Say</span></h2>
+    <div class="max-w-2xl mx-auto">
+      <blockquote class="italic text-lg">"TopMind Agency transformed our brand's online presence. Highly recommended!"</blockquote>
+      <p class="mt-4 font-semibold">— Sarah N., Founder, GreenBite</p>
+    </div>
+  </section>
 
   <!-- 5-Star Rating -->
   <div class="fixed bottom-6 right-6 flex items-center space-x-1 bg-gray-800 px-4 py-2 rounded-lg shadow-lg">
@@ -81,6 +73,53 @@
       <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
     </div>
   </div>
+
+  <footer class="bg-gray-800 text-white mt-10 p-8 rounded-lg shadow">
+  <div class="grid md:grid-cols-3 gap-6 mb-6">
+    <!-- Customer Care -->
+    <div>
+      <h3 class="text-lg font-semibold mb-2"> <span class="text-yellow-400">Customer Care</span></h3>
+      <p>Address: 429 St, Nairobi</p>
+      <p>Phone: <a href="tel:0710000000" class="text-blue-400 hover:underline">0713497021</a></p>
+      <p>Email: <a href="mailto:support@topminds.com" class="text-blue-400 hover:underline">support@topminds.com</a></p>
+      <p><a href="#" class="text-green-400 hover:underline">Ask your questions on WhatsApp</a></p>
+    </div>
+
+    <!-- Follow Us -->
+    <div>
+      <h3 class="text-lg font-semibold mb-2">Follow Us</h3>
+      <p class="mb-2">Stay connected with our latest campaigns:</p>
+      <div class="flex flex-wrap gap-4">
+        <a href="#" class="hover:text-blue-400 flex items-center space-x-1"><i class="fab fa-facebook-f"></i><span class="hidden sm:inline">Facebook</span></a>
+        <a href="#" class="hover:text-cyan-400 flex items-center space-x-1"><i class="fab fa-twitter"></i><span class="hidden sm:inline">Twitter</span></a>
+        <a href="#" class="hover:text-pink-400 flex items-center space-x-1"><i class="fab fa-instagram"></i><span class="hidden sm:inline">Instagram</span></a>
+        <a href="#" class="hover:text-red-400 flex items-center space-x-1"><i class="fab fa-youtube"></i><span class="hidden sm:inline">YouTube</span></a>
+      </div>
+    </div>
+
+    <!-- Subscribe -->
+    <div>
+      <h3 class="text-lg font-semibold mb-2">Subscribe to our emails</h3>
+      <p class="mb-2">Receive Offers & Product Drops</p>
+      <form action="#" method="post" class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
+        <input type="email" name="subscribe_email" placeholder="Email" class="p-2 border rounded w-full sm:w-auto flex-1 bg-gray-700 text-white border-gray-600" required>
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300">Subscribe</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Bottom Nav Menu -->
+  <div class="flex flex-wrap justify-center gap-6 mt-6 text-sm">
+    <a href="/" class="hover:text-yellow-400 transition">Home</a>
+    <a href="/about" class="hover:text-yellow-400 transition">About</a>
+    <a href="/services" class="hover:text-yellow-400 transition">Services</a>
+    <a href="/portfolio" class="hover:text-yellow-400 transition">Portfolio</a>
+    <a href="/contact" class="hover:text-yellow-400 transition">Contact</a>
+  </div>
+
+  <hr class="my-4 border-gray-600">
+  <p class="text-sm text-center text-gray-400">&copy; 2025 TopMind Agency. All rights reserved. | <a href="#" class="underline text-blue-400">Privacy Policy</a></p>
+</footer>
 
 </section>
 
