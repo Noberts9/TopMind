@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block title %}Portfolio | TopMind Agency{% endblock %}
+
+{% block content %}
+
+<section class="bg-gray-500 min-h-screen text-white py-12 px-6">
+
+  <!-- Section Heading -->
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-bold mb-4">
+      Our <span class="text-yellow-400">Creative Work</span> Speaks Volumes
+    </h1>
+    <p class="text-lg max-w-3xl mx-auto">
+      Explore our latest projects that showcase our passion for innovation, storytelling, and digital excellence.
+    </p>
+  </div>
+
+  <!-- Portfolio Tabs -->
+  <div class="flex justify-center mb-8 space-x-4">
+    <button class="px-6 py-2 bg-gray-800 hover:bg-gray-700 rounded transition duration-300">All</button>
+    <button class="px-6 py-2 bg-gray-800 hover:bg-gray-700 rounded transition duration-300">Branding</button>
+    <button class="px-6 py-2 bg-gray-800 hover:bg-gray-700 rounded transition duration-300">Web Design</button>
+    <button class="px-6 py-2 bg-gray-800 hover:bg-gray-700 rounded transition duration-300">Social Media</button>
+    <button class="px-6 py-2 bg-gray-800 hover:bg-gray-700 rounded transition duration-300">SEO</button>
+  </div>
+
+  <!-- Portfolio Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <!-- Project Cards with Zoom Effect -->
+    {% for project in [
+      ('project1.jpg', 'Fashion Brand Campaign', 'A bold branding project for a streetwear label that went viral on Instagram.'),
+      ('project2.jpg', 'Restaurant Web Launch', 'A responsive food website built for speed and delicious SEO impact.'),
+      ('project3.jpg', 'E-commerce Social Ads', 'Optimized Facebook and TikTok ad campaigns that doubled conversions.'),
+      ('project4.jpg', 'SEO Revamp for Tech Site', 'We helped a tech startup jump from page 5 to #1 in under 90 days.'),
+      ('project5.jpg', 'Luxury Brand Identity', 'We designed a full visual system from packaging to promo for a luxury line.'),
+      ('project6.jpg', 'NGO Awareness Campaign', 'Impactful messaging and outreach that sparked real-world engagement.')
+    ] %}
+    <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 group">
+      <div class="overflow-hidden">
+        <img src="{{ url_for('static', filename='images/' ~ project[0]) }}" alt="{{ project[1] }}"
+             class="w-full h-48 object-cover transform group-hover:scale-105 transition duration-500 ease-in-out">
+      </div>
+      <div class="p-4">
+        <h3 class="text-xl font-semibold mb-2">{{ project[1] }}</h3>
+        <p class="text-sm text-gray-300">{{ project[2] }}</p>
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+
+  <section class="py-12 px-6 text-center bg-gray-800 text-white">
+   <h2 class="text-2xl font-bold mb-6"><span  class="text-yellow-400">Our Clients</span></h2>
+   <div class="flex flex-wrap justify-center gap-6">
+     <!-- Replace with actual logos -->
+     <img src="/static/images/client1.jpg" class="h-12 grayscale hover:grayscale-0 transition" />
+     <img src="/static/images/client2.jpg" class="h-12 grayscale hover:grayscale-0 transition" />
+     <img src="/static/images/client3.jpg" class="h-12 grayscale hover:grayscale-0 transition" />
+     <img src="/static/images/client4.jpg" class="h-12 grayscale hover:grayscale-0 transition" />
+     <img src="/static/images/client5.jpg" class="h-12 grayscale hover:grayscale-0 transition" />
+     <img src="/static/images/client6.jpg" class="h-12 grayscale hover:grayscale-0 transition" />
+     <img src="/static/images/client7.jpg" class="h-12 grayscale hover:grayscale-0 transition" />
+     <img src="/static/images/client8.jpg" class="h-12 grayscale hover:grayscale-0 transition" />
+     <img src="/static/images/client9.jpg" class="h-12 grayscale hover:grayscale-0 transition" />
+   </div>
+ </section>
+
+ <section class="py-12 px-6 text-center bg-gray-700 text-white">
+   <h2 class="text-2xl font-bold mb-6"><span  class="text-yellow-400">What Our Clients Say</span></h2>
+   <div class="max-w-2xl mx-auto">
+     <blockquote class="italic text-lg">"TopMind Agency transformed our brand's online presence. Highly recommended!"</blockquote>
+     <p class="mt-4 font-semibold">— Sarah N., Founder, GreenBite</p>
+   </div>
+ </section>
+
+  <!-- 5-Star Rating -->
+  <div class="fixed bottom-6 right-6 flex items-center space-x-1 bg-gray-800 px-4 py-2 rounded-lg shadow-lg">
+    <p class="text-sm text-white font-medium">Rated</p>
+    <div class="flex text-yellow-400 text-xl">
+      <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+    </div>
+  </div>
+
+</section>
+
+{% endblock %}

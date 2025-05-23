@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% block title %}About | TopMind Agency{% endblock %}
+
+{% block content %}
+
+<!-- Top Banner -->
+{% set about_banner = url_for('static', filename='images/about-banner.jpg') %}
+<section class="w-full bg-cover bg-center h-64 flex items-center justify-center text-white text-center"
+         style="background-image: url('{{ about_banner }}');">
+  <h1 class="text-4xl font-bold bg-black bg-opacity-60 px-6 py-2 rounded">About Us</h1>
+</section>
+
+<!-- About Content -->
+<section class="py-12 px-6 max-w-4xl mx-auto text-center text-gray-900">
+  <h2 class="text-2xl md:text-3xl font-semibold mb-4">THE LEADING CREATIVE MARKETING AGENCY IN KENYA</h2>
+  <p class="text-xl italic mb-6">Beyond campaigns. 🌍<br>Strategy | Creativity | Digital Influence</p>
+  
+  <!-- Image Gallery (outside About Content section) -->
+ <section class="py-12 px-6 bg-gray-100">
+   <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+     <img src="{{ url_for('static', filename='images/about1.jpg') }}" alt="Creative Campaign" class="rounded shadow">
+     <img src="{{ url_for('static', filename='images/about2.jpg') }}" alt="Strategy Session" class="rounded shadow">
+     <img src="{{ url_for('static', filename='images/about3.jpg') }}" alt="Team Collaboration" class="rounded shadow">
+   </div>
+ </section>
+
+  <p class="mb-4">
+    Founded in 2020, MarketMe was born out of a passion to help brands do more than just exist—we help them thrive.
+    We are a full-service marketing agency committed to elevating brands through strategic storytelling,
+    impactful visuals, and data-driven campaigns.
+  </p>
+  <p class="mb-4">
+    What began as a small team of visionaries in a modest workspace has grown into a powerhouse agency collaborating
+    with top-tier brands across Kenya and East Africa. Within a year, our reach expanded dramatically through social
+    media, client referrals, and bold marketing executions.
+  </p>
+  <p class="mb-4">
+    In 2022, we leveled up—establishing a creative studio and expanding our services to include video production,
+    influencer marketing, branding strategy, and paid media. Our multidisciplinary team ensures every brand we touch
+    is built to stand out and last.
+  </p>
+  <p>
+    At MarketMe, we don’t just run ads—we build movements. With a team of 20+ creatives, strategists, and digital
+    experts, we’re shaping the future of marketing—one breakthrough brand at a time.
+  </p>
+</section>
+
+<section class="py-16 px-6 bg-gray-100 dark:bg-gray-800 text-center md:text-left">
+  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+    
+    <!-- Text Content -->
+    <div>
+      <h2 class="text-3xl font-bold mb-4">
+        Meet Our <span class="text-blue-600 dark:text-blue-400">Founder</span>
+      </h2>
+      <p class="text-lg leading-relaxed">
+        <span class="font-semibold text-gray-800 dark:text-white">Brian Omondi</span>, the visionary behind 
+        <span class="text-blue-600 dark:text-blue-400 font-semibold">TopMind Agency</span>, has over a decade of experience in branding,
+        digital marketing, and creative strategy. Known for his innovative approach and dedication to client success,
+        Brian built TopMind to help businesses thrive through bold ideas and measurable results.
+      </p>
+    </div>
+
+    <!-- Image -->
+    <div class="flex justify-center md:justify-end">
+      <img 
+        src="{{ url_for('static', filename='images/founder.jpg') }}" 
+        alt="Founder of TopMind Agency"
+        class="rounded-lg shadow-lg w-80 h-auto transform transition duration-300 hover:scale-105"
+      />
+    </div>
+
+  </div>
+</section>
+
+<section class="py-16 px-6 bg-white dark:bg-gray-900 text-center">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold mb-12">
+      Meet Our <span class="text-blue-600 dark:text-blue-400">Team</span>
+    </h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+      
+      <!-- Co-founder -->
+      <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
+        <img 
+          src="{{ url_for('static', filename='images/cofounder.jpg') }}" 
+          alt="Co-founder"
+          class="rounded-full w-32 h-32 mx-auto mb-4 object-cover"
+        />
+        <h3 class="text-xl font-semibold">Jane Kendi</h3>
+        <p class="text-blue-600 dark:text-blue-400">Co-founder</p>
+        <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
+          Jane drives strategic partnerships and keeps our vision bold and innovative.
+        </p>
+      </div>
+
+      <!-- IT Lead -->
+      <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
+        <img 
+          src="{{ url_for('static', filename='images/itlead.png') }}" 
+          alt="IT Lead"
+          class="rounded-full w-32 h-32 mx-auto mb-4 object-cover"
+        />
+        <h3 class="text-xl font-semibold">Nobert Nobel</h3>
+        <p class="text-blue-600 dark:text-blue-400">IT & Systems</p>
+        <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
+          Nobert ensures our tech stays cutting-edge, secure, and seamless for all users.
+        </p>
+      </div>
+
+      <!-- Marketing Head -->
+      <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
+        <img 
+          src="{{ url_for('static', filename='images/marketer.jpg') }}" 
+          alt="Marketing Head"
+          class="rounded-full w-32 h-32 mx-auto mb-4 object-cover"
+        />
+        <h3 class="text-xl font-semibold">Linet Mutua</h3>
+        <p class="text-blue-600 dark:text-blue-400">Marketing & PR</p>
+        <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
+          Linet crafts bold campaigns and ensures TopMind's story resonates with the world.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- Footer -->
+ <footer class="bg-gray-800 text-white mt-10 p-8 rounded-lg shadow">
+    <div class="grid md:grid-cols-3 gap-6 mb-6">
+      <!-- Customer Care -->
+      <div>
+        <h3 class="text-lg font-semibold mb-2"> <span  class="text-yellow-400">Customer Care</span></h3>
+        <p>Address: 429 St, Nairobi</p>
+        <p>Phone: <a href="tel:0710000000" class="text-blue-400 hover:underline">0713497021</a></p>
+        <p>Email: <a href="mailto:support@topminds.com" class="text-blue-400 hover:underline">support@topminds.com</a></p>
+        <p><a href="#" class="text-green-400 hover:underline">Ask your questions on WhatsApp</a></p>
+      </div>
+
+      <!-- Follow Us -->
+      <div>
+        <h3 class="text-lg font-semibold mb-2">Follow Us</h3>
+        <p class="mb-2">Stay connected with our latest campaigns:</p>
+        <div class="flex space-x-4">
+          <a href="#" class="hover:text-blue-400">Facebook</a>
+          <a href="#" class="hover:text-cyan-400">Twitter</a>
+          <a href="#" class="hover:text-pink-400">Instagram</a>
+          <a href="#" class="hover:text-red-400">YouTube</a>
+        </div>
+      </div>
+
+      <!-- Subscribe -->
+      <div>
+        <h3 class="text-lg font-semibold mb-2">Subscribe to our emails</h3>
+        <p class="mb-2">Receive Offers & Product Drops</p>
+        <form action="#" method="post" class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
+          <input type="email" name="subscribe_email" placeholder="Email" class="p-2 border rounded w-full sm:w-auto bg-gray-700 text-white border-gray-600" required>
+          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <hr class="my-4 border-gray-600">
+    <p class="text-sm text-center text-gray-400">&copy; 2025 TopMind Agency. All rights reserved. | <a href="#" class="underline text-blue-400">Privacy Policy</a></p>
+  </footer>
+
+{% endblock %}

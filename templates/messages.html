@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Messages - Admin Panel{% endblock %}
+
+{% block content %}
+  <h1 class="text-3xl font-bold mb-6">Contact Messages</h1>
+
+  {% if messages %}
+    <div class="space-y-4">
+      {% for msg in messages %}
+        <div class="border rounded-lg p-4 shadow-md bg-white dark:bg-gray-800">
+          <div class="flex justify-between items-center mb-2">
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100">{{ msg.name }}</h2>
+            <span class="text-sm text-gray-500 dark:text-gray-400">{{ msg.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</span>
+          </div>
+          <p class="text-gray-700 dark:text-gray-300 mb-2">{{ msg.message }}</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400">Email: <a href="mailto:{{ msg.email }}" class="text-blue-500 hover:underline">{{ msg.email }}</a></p>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination controls -->
+    <div class="mt-8 flex justify-center space-x-2">
+      {% if pagination.has_prev %}
+        <a href="{{ url_for('view_messages', page=pagination.prev_num) }}" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Previous</a>
+      {% else %}
+        <span class="px-4 py-2 bg-gray-300 text-gray-500 rounded cursor-not-allowed">Previous</span>
+      {% endif %}
+
+      {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+        {% if page_num %}
+          {% if page_num == pagination.page %}
+            <span class="px-4 py-2 bg-blue-800 text-white rounded font-bold">{{ page_num }}</span>
+          {% else %}
+            <a href="{{ url_for('view_messages', page=page_num) }}" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">{{ page_num }}</a>
+          {% endif %}
+        {% else %}
+          <span class="px-2 py-2">…</span>
+        {% endif %}
+      {% endfor %}
+
+      {% if pagination.has_next %}
+        <a href="{{ url_for('view_messages', page=pagination.next_num) }}" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Next</a>
+      {% else %}
+        <span class="px-4 py-2 bg-gray-300 text-gray-500 rounded cursor-not-allowed">Next</span>
+      {% endif %}
+    </div>
+
+  {% else %}
+    <p class="text-gray-700 dark:text-gray-300">No messages found.</p>
+  {% endif %}
+{% endblock %}
