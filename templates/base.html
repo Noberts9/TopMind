@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{% block title %}TopMind Agency{% endblock %}</title>
-  
+
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -21,33 +21,46 @@
 <body class="bg-white text-black dark:bg-gray-900 dark:text-white">
 
   <!-- Navbar -->
-  <nav class="bg-black text-white shadow p-4 flex justify-between items-center">
+  <nav class="bg-black text-white shadow p-4 flex justify-between items-center relative">
     <a href="/" class="font-bold text-xl">TopMind</a>
-    
-    <!-- Navigation links -->
-    <div class="space-x-4 hidden md:flex items-center">
-      <a href="/" class="hover:text-blue-500">Home</a>
-      <a href="/about" class="hover:text-blue-500">About</a>
-      <a href="/services" class="hover:text-blue-500">Services</a>
-      <a href="/portfolio" class="hover:text-blue-500">Portfolio</a>
-      <a href="/contact" class="hover:text-blue-500">Contact</a>
-      
-      <!-- Admin Login Trigger -->
+
+    <!-- Hamburger Icon (Mobile Only) -->
+    <div class="md:hidden">
+      <button id="menuToggle" onclick="toggleMenu()" class="text-white text-3xl focus:outline-none">
+        ☰
+      </button>
+    </div>
+
+    <!-- Navigation Links -->
+    <div id="navMenu" class="hidden absolute top-full left-0 w-full bg-black flex-col space-y-4 px-6 py-4 md:space-y-0 md:static md:flex md:flex-row md:space-x-4 md:px-0 md:py-0 md:items-center md:w-auto z-50">
+      <!-- Close Icon (Mobile Only) -->
+      <div class="flex justify-end md:hidden">
+        <button onclick="toggleMenu()" class="text-white text-2xl font-bold mb-2">
+          ×
+        </button>
+      </div>
+
+      <a href="/" class="hover:text-blue-500" onclick="closeMenu()">Home</a>
+      <a href="/about" class="hover:text-blue-500" onclick="closeMenu()">About</a>
+      <a href="/services" class="hover:text-blue-500" onclick="closeMenu()">Services</a>
+      <a href="/portfolio" class="hover:text-blue-500" onclick="closeMenu()">Portfolio</a>
+      <a href="/contact" class="hover:text-blue-500" onclick="closeMenu()">Contact</a>
+
       {% if not session.get('admin_logged_in') %}
         <button 
           id="adminLoginBtn" 
           class="hover:text-blue-500 focus:outline-none"
-          onclick="document.getElementById('adminLoginModal').classList.remove('hidden')"
+          onclick="document.getElementById('adminLoginModal').classList.remove('hidden'); closeMenu()"
         >Admin</button>
       {% else %}
-        <a href="{{ url_for('view_messages') }}" class="hover:text-blue-500">View Messages</a>
-        <a href="{{ url_for('logout') }}" class="hover:text-blue-500">Logout</a>
+        <a href="{{ url_for('view_messages') }}" class="hover:text-blue-500" onclick="closeMenu()">View Messages</a>
+        <a href="{{ url_for('logout') }}" class="hover:text-blue-500" onclick="closeMenu()">Logout</a>
       {% endif %}
     </div>
 
     <!-- Dark Mode Toggle Button -->
     <button onclick="document.documentElement.classList.toggle('dark')" 
-            class="bg-gray-800 text-white px-4 py-2 rounded shadow hover:bg-gray-700">
+            class="bg-gray-800 text-white px-4 py-2 rounded shadow hover:bg-gray-700 hidden md:block">
       Toggle Dark
     </button>
   </nav>
@@ -68,7 +81,7 @@
         class="absolute top-2 right-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-bold text-xl"
         aria-label="Close modal"
       >&times;</button>
-      
+
       <h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Admin Login</h2>
       <form method="POST" action="{{ url_for('admin') }}">
         <div class="mb-4">
@@ -100,6 +113,29 @@
       </form>
     </div>
   </div>
+
+  <!-- Navbar Toggle Script -->
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('navMenu');
+      const isOpen = menu.classList.contains('flex');
+      if (isOpen) {
+        menu.classList.remove('flex');
+        menu.classList.add('hidden');
+      } else {
+        menu.classList.remove('hidden');
+        menu.classList.add('flex');
+      }
+    }
+
+    function closeMenu() {
+      const menu = document.getElementById('navMenu');
+      if (window.innerWidth < 768) {
+        menu.classList.remove('flex');
+        menu.classList.add('hidden');
+      }
+    }
+  </script>
 
 </body>
 </html>
