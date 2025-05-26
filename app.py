@@ -1,19 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from pymongo import MongoClient
 from datetime import datetime
-import os
-
 
 app = Flask(__name__)
-mongo_uri = 'mongodb+srv://topminduser:SubaruwrxSTi@topmind-cluster.1tlh8xr.mongodb.net/topmind-db?retryWrites=true&w=majority'
-client = MongoClient(mongo_uri, tls=True)
-app.secret_key = 'SubaruwrxSTi'
+app.secret_key = 'SubaruwrxSTi'  # replace with a secure key for production
 
-# MongoDB configuration
-mongo_uri = os.environ.get("MONGO_URI")  # You’ll set this on Render
-client = MongoClient(mongo_uri)
-db = client["topmind-db"]  # Use any database name
-messages_collection = db["messages"]
+# Temporary message storage (resets on restart)
+temp_messages = []
 
 # ROUTES
 @app.route('/')
@@ -43,8 +35,7 @@ def contact():
             flash("All fields are required.", "danger")
             return redirect(url_for('contact'))
 
-        # Insert into MongoDB
-        messages_collection.insert_one({
+        temp_messages.append({
             "name": name,
             "email": email,
             "message": message,
@@ -56,7 +47,6 @@ def contact():
 
     return render_template('contact.html')
 
-# Simple admin login
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
     if request.method == 'POST':
@@ -69,7 +59,6 @@ def admin():
             flash('Invalid credentials', 'danger')
     return render_template('admin_login.html')
 
-# View messages
 @app.route('/messages')
 def view_messages():
     if not session.get('admin_logged_in'):
@@ -81,10 +70,10 @@ def view_messages():
     per_page = 5
     skips = per_page * (page - 1)
 
-    all_messages = list(messages_collection.find().sort("timestamp", -1).skip(skips).limit(per_page))
-    total = messages_collection.count_documents({})
+    paginated = temp_messages[::-1][skips:skips + per_page]
+    total = len(temp_messages)
 
-    return render_template('messages.html', messages=all_messages, page=page, total=total, per_page=per_page)
+    return render_template('messages.html', messages=paginated, page=page, total=total, per_page=per_page)
 
 @app.route('/logout')
 def logout():
@@ -92,6 +81,5 @@ def logout():
     flash("Logged out successfully.", 'info')
     return redirect(url_for('index'))
 
-# Run server
 if __name__ == '__main__':
     app.run(debug=True)
