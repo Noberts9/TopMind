@@ -3,8 +3,11 @@ from pymongo import MongoClient
 from datetime import datetime
 import os
 
+
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Replace with a secure key in production
+app.config['MONGO_URI'] = os.environ.get('MONGO_URI')
+app.config['MONGO_URI'] = 'mongodb+srv://topminduser:<db_password>@topmind-cluster.1tlh8xr.mongodb.net/?retryWrites=true&w=majority&appName=topmind-cluster'
+app.secret_key = 'SubaruwrxSTi'#replace with a secure key from production
 
 # MongoDB configuration
 mongo_uri = os.environ.get("MONGO_URI")  # You’ll set this on Render
