@@ -5,9 +5,9 @@ import os
 
 
 app = Flask(__name__)
-app.config['MONGO_URI'] = os.environ.get('MONGO_URI')
-app.config['MONGO_URI'] = 'mongodb+srv://topminduser:<db_password>@topmind-cluster.1tlh8xr.mongodb.net/?retryWrites=true&w=majority&appName=topmind-cluster'
-app.secret_key = 'SubaruwrxSTi'#replace with a secure key from production
+mongo_uri = 'mongodb+srv://topminduser:SubaruwrxSTi@topmind-cluster.1tlh8xr.mongodb.net/topmind-db?retryWrites=true&w=majority'
+client = MongoClient(mongo_uri, tls=True)
+app.secret_key = 'SubaruwrxSTi'
 
 # MongoDB configuration
 mongo_uri = os.environ.get("MONGO_URI")  # You’ll set this on Render
