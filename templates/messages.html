@@ -1,51 +1,66 @@
-{% extends "base.html" %}
-{% block title %}Messages - Admin Panel{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin | Messages</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
 
-{% block content %}
-  <h1 class="text-3xl font-bold mb-6">Contact Messages</h1>
+  <!-- Admin Navbar -->
+  <nav class="bg-gray-800 p-4 flex justify-between items-center">
+    <h1 class="text-white text-xl font-semibold">Admin Dashboard</h1>
+    <a href="{{ url_for('logout') }}" class="text-sm bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Logout</a>
+  </nav>
 
-  {% if messages %}
-    <div class="space-y-4">
-      {% for msg in messages %}
-        <div class="border rounded-lg p-4 shadow-md bg-white dark:bg-gray-800">
-          <div class="flex justify-between items-center mb-2">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100">{{ msg.name }}</h2>
-            <span class="text-sm text-gray-500 dark:text-gray-400">{{ msg.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</span>
+  <!-- Flash Messages -->
+  <div class="container mx-auto mt-4">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="mb-4 px-4 py-2 text-sm text-white rounded bg-{{ 'green' if category == 'success' else 'red' }}-500">
+            {{ message }}
           </div>
-          <p class="text-gray-700 dark:text-gray-300 mb-2">{{ msg.message }}</p>
-          <p class="text-sm text-gray-500 dark:text-gray-400">Email: <a href="mailto:{{ msg.email }}" class="text-blue-500 hover:underline">{{ msg.email }}</a></p>
-        </div>
-      {% endfor %}
-    </div>
-
-    <!-- Pagination controls -->
-    <div class="mt-8 flex justify-center space-x-2">
-      {% if pagination.has_prev %}
-        <a href="{{ url_for('view_messages', page=pagination.prev_num) }}" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Previous</a>
-      {% else %}
-        <span class="px-4 py-2 bg-gray-300 text-gray-500 rounded cursor-not-allowed">Previous</span>
+        {% endfor %}
       {% endif %}
+    {% endwith %}
+  </div>
 
-      {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
-        {% if page_num %}
-          {% if page_num == pagination.page %}
-            <span class="px-4 py-2 bg-blue-800 text-white rounded font-bold">{{ page_num }}</span>
-          {% else %}
-            <a href="{{ url_for('view_messages', page=page_num) }}" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">{{ page_num }}</a>
-          {% endif %}
-        {% else %}
-          <span class="px-2 py-2">…</span>
+  <!-- Message List -->
+  <div class="container mx-auto px-4 py-6">
+    <h2 class="text-2xl font-bold mb-4">Inbox Messages</h2>
+
+    {% if messages %}
+      <div class="space-y-4">
+        {% for message in messages %}
+          <div class="bg-white p-4 rounded shadow border border-gray-200">
+            <div class="flex justify-between items-center">
+              <h3 class="font-semibold text-lg">{{ message.name }}</h3>
+              <span class="text-sm text-gray-500">{{ message.timestamp.strftime('%Y-%m-%d %H:%M') }}</span>
+            </div>
+            <p class="text-sm text-gray-600 mb-1"><strong>Email:</strong> {{ message.email }}</p>
+            <p class="text-gray-700 mt-2">{{ message.message }}</p>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Pagination -->
+      <div class="flex justify-center mt-6 space-x-4">
+        {% if pagination.has_prev %}
+          <a href="{{ url_for('view_messages', page=pagination.prev_num) }}"
+             class="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400">&laquo; Prev</a>
         {% endif %}
-      {% endfor %}
+        <span class="px-3 py-1 bg-gray-200 rounded">{{ pagination.page }} / {{ pagination.pages }}</span>
+        {% if pagination.has_next %}
+          <a href="{{ url_for('view_messages', page=pagination.next_num) }}"
+             class="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400">Next &raquo;</a>
+        {% endif %}
+      </div>
 
-      {% if pagination.has_next %}
-        <a href="{{ url_for('view_messages', page=pagination.next_num) }}" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Next</a>
-      {% else %}
-        <span class="px-4 py-2 bg-gray-300 text-gray-500 rounded cursor-not-allowed">Next</span>
-      {% endif %}
-    </div>
+    {% else %}
+      <p class="text-gray-600">No messages found.</p>
+    {% endif %}
+  </div>
 
-  {% else %}
-    <p class="text-gray-700 dark:text-gray-300">No messages found.</p>
-  {% endif %}
-{% endblock %}
+</body>
+</html>
