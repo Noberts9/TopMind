@@ -1,28 +1,16 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from flask_sqlalchemy import SQLAlchemy
+from pymongo import MongoClient
 from datetime import datetime
 import os
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Use a strong secret in production
+app.secret_key = 'your_secret_key'  # Replace with a secure key in production
 
-# Database config
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'messages.db')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app)
-
-# Database model
-class ContactMessage(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), nullable=False)
-    email = db.Column(db.String(120), nullable=False)
-    message = db.Column(db.Text, nullable=False)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-
-    def __repr__(self):
-        return f'<Message from {self.name}>'
+# MongoDB configuration
+mongo_uri = os.environ.get("MONGO_URI")  # You’ll set this on Render
+client = MongoClient(mongo_uri)
+db = client["topmind-db"]  # Use any database name
+messages_collection = db["messages"]
 
 # ROUTES
 @app.route('/')
@@ -48,9 +36,17 @@ def contact():
         email = request.form['email']
         message = request.form['message']
 
-        new_msg = ContactMessage(name=name, email=email, message=message)
-        db.session.add(new_msg)
-        db.session.commit()
+        if not all([name, email, message]):
+            flash("All fields are required.", "danger")
+            return redirect(url_for('contact'))
+
+        # Insert into MongoDB
+        messages_collection.insert_one({
+            "name": name,
+            "email": email,
+            "message": message,
+            "timestamp": datetime.utcnow()
+        })
 
         flash('Message sent successfully!', 'success')
         return redirect(url_for('contact'))
@@ -63,32 +59,30 @@ def admin():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        # Replace with real authentication
         if username == 'admin' and password == 'admin123':
             session['admin_logged_in'] = True
             return redirect(url_for('view_messages'))
         else:
             flash('Invalid credentials', 'danger')
-
     return render_template('admin_login.html')
 
-# Protected message view
+# View messages
 @app.route('/messages')
 def view_messages():
     if not session.get('admin_logged_in'):
         flash("Please log in to access admin messages.", 'warning')
         return redirect(url_for('admin'))
 
-    page = request.args.get('page', 1, type=int)
-    per_page = 5  # messages per page
+    # Pagination manually
+    page = int(request.args.get('page', 1))
+    per_page = 5
+    skips = per_page * (page - 1)
 
-    pagination = ContactMessage.query.order_by(ContactMessage.timestamp.desc()).paginate(page=page, per_page=per_page)
-    messages = pagination.items
+    all_messages = list(messages_collection.find().sort("timestamp", -1).skip(skips).limit(per_page))
+    total = messages_collection.count_documents({})
 
-    return render_template('messages.html', messages=messages, pagination=pagination)
+    return render_template('messages.html', messages=all_messages, page=page, total=total, per_page=per_page)
 
-
-# Logout route
 @app.route('/logout')
 def logout():
     session.pop('admin_logged_in', None)
@@ -97,6 +91,4 @@ def logout():
 
 # Run server
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()  # Make sure tables exist
     app.run(debug=True)
