@@ -5,24 +5,32 @@
 <div class="bg-gray-900 text-white"> <!-- Wrap entire content in dark background -->
 
   <!-- Define Banner Image URLs -->
-  {% set top_banner = url_for('static', filename='images/top-banner.jpg') + '?v=1' %}
+  {% set top_banner = url_for('static', filename='images/intro banner.mp4') + '?v=1' %}
   {% set middle_banner = url_for('static', filename='images/middle-banner.jpg') + '?v=1' %}
   {% set bottom_banner = url_for('static', filename='images/bottom-banner.jpg') + '?v=1' %}
 
-  <!-- Top Banner -->
-  <section class="w-full bg-cover bg-center h-64 flex items-center justify-center text-white text-center"
-           style="background-image: url('{{ top_banner }}');">
-    <h1 class="text-4xl font-bold bg-black bg-opacity-60 px-6 py-2 rounded">
-      <span>Elevate Your Brand with TopMind</span>
-    </h1>
-  </section>
+ <!-- Top Banner with Video -->
+  <div class="video-wrapper">
+  <video autoplay muted loop playsinline>
+    <source src="{{ url_for('static', filename='images/intro banner.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 
   <!-- Opening Paragraph -->
   <section class="py-8 px-6 text-center">
     <p class="text-lg max-w-3xl mx-auto">
-      At <span class="font-semibold text-yellow-400">TopMind Agency</span>, we craft high-impact marketing strategies to help brands stand out and grow.
-      We focus on results-driven solutions tailored to your unique business goals.
-    </p>
+      At <span class="font-bold text-yellow-400">TopMind Agency</span>
+      <h1 class="font-bold">WE MAKE GOOD BRANDS
+        <br>GO BAD 
+        Bold And Disruptive</br>
+      </h1>
+     F*** boring.
+     We're here to disrupt the future of digital marketing, scaling brands with bold strategies that rise above the noise.
+    </p> 
+    <!-- Centered text -->
+   <h1 class="relative z-10 text-4xl font-bold px-6 py-2 rounded">
+     <span>Elevate Your Brand with TopMind</span>
+   </h1>
   </section>
 
   <!-- Strength Tabs -->
@@ -80,7 +88,7 @@
     <div>
       <h3 class="text-lg font-semibold mb-2"> <span class="text-yellow-400">Customer Care</span></h3>
       <p>Address: 429 St, Nairobi</p>
-      <p>Phone: <a href="tel:0710000000" class="text-blue-400 hover:underline">0713497021</a></p>
+      <p>Phone: <a href="tel:0710000000" class="text-blue-400 hover:underline">0707846262</a></p>
       <p>Email: <a href="mailto:support@topminds.com" class="text-blue-400 hover:underline">support@topminds.com</a></p>
       <p><a href="#" class="text-green-400 hover:underline">Ask your questions on WhatsApp</a></p>
     </div>
@@ -90,22 +98,33 @@
       <h3 class="text-lg font-semibold mb-2">Follow Us</h3>
       <p class="mb-2">Stay connected with our latest campaigns:</p>
       <div class="flex flex-wrap gap-4">
-        <a href="#" class="hover:text-blue-400 flex items-center space-x-1"><i class="fab fa-facebook-f"></i><span class="hidden sm:inline">Facebook</span></a>
-        <a href="#" class="hover:text-cyan-400 flex items-center space-x-1"><i class="fab fa-twitter"></i><span class="hidden sm:inline">Twitter</span></a>
-        <a href="#" class="hover:text-pink-400 flex items-center space-x-1"><i class="fab fa-instagram"></i><span class="hidden sm:inline">Instagram</span></a>
-        <a href="#" class="hover:text-red-400 flex items-center space-x-1"><i class="fab fa-youtube"></i><span class="hidden sm:inline">YouTube</span></a>
+        <a href="#" class="hover:text-blue-400 flex items-center space-x-1"><i class="fab fa-facebook-f"></i><span class="hidden sm:inline"></span></a>
+        <a href="#" class="hover:text-cyan-400 flex items-center space-x-1"><i class="fab fa-twitter"></i><span class="hidden sm:inline"></span></a>
+        <a href="#" class="hover:text-pink-400 flex items-center space-x-1"><i class="fab fa-instagram"></i><span class="hidden sm:inline"></span></a>
+        <a href="#" class="hover:text-red-400 flex items-center space-x-1"><i class="fab fa-youtube"></i><span class="hidden sm:inline"></span></a>
       </div>
     </div>
 
     <!-- Subscribe -->
-    <div>
-      <h3 class="text-lg font-semibold mb-2">Subscribe to our emails</h3>
-      <p class="mb-2">Receive Offers & Product Drops</p>
-      <form action="#" method="post" class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
-        <input type="email" name="subscribe_email" placeholder="Email" class="p-2 border rounded w-full sm:w-auto flex-1 bg-gray-700 text-white border-gray-600" required>
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300">Subscribe</button>
-      </form>
-    </div>
+   <div>
+     <h3 class="text-lg font-semibold mb-2">Subscribe to our emails</h3>
+     <p class="mb-2">Receive Offers & Product Drops</p>
+     <form action="https://getform.io/f/akknnvva" method="POST" class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
+       <input 
+       type="email" 
+       name="email" 
+       placeholder="Email" 
+       class="p-2 border rounded w-full sm:w-auto flex-1 bg-gray-700 text-white border-gray-600" 
+       required>
+       <button 
+         type="submit" 
+         class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300">
+         Subscribe
+       </button>
+     </form>
+   </div>
+
+
   </div>
 
   <!-- Bottom Nav Menu -->
