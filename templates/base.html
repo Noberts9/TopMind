@@ -4,27 +4,62 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{% block title %}TopMind Agency{% endblock %}</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- AOS Animation CSS -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
-        extend: {
-          // Custom config if needed
-        }
+        extend: {}
       }
     }
   </script>
+
+  <style>
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-scroll {
+      animation: scroll 30s linear infinite;
+    }
+  </style>
 </head>
-<body class="bg-white text-black dark:bg-gray-900 dark:text-white">
+
+<body class="bg-white text-black dark:bg-gray-900 dark:text-white overflow-x-hidden">
+
+  <!-- Splash Screen -->
+  <div id="splashScreen" class="fixed inset-0 bg-black flex items-center justify-center z-[9999] transition-opacity duration-1000 pointer-events-auto">
+    <!-- Responsive Video Wrapper -->
+    <div class="absolute inset-0 overflow-hidden z-0">
+      <video autoplay muted loop playsinline class="w-full h-full object-cover">
+        <source src="{{ url_for('static', filename='images/splash screen.mp4') }}" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <!-- Logo & Button Overlay -->
+    <div class="relative z-10 flex flex-col items-center text-center px-4">
+      <img src="/static/images/logo.png" alt="TopMind Logo" class="w-28 h-28 sm:w-32 sm:h-32 mb-6 animate-pulse" />
+      <button 
+        onclick="enterSite()" 
+        class="bg-yellow-400 text-black px-6 py-3 rounded font-semibold hover:bg-yellow-500 transition"
+      >
+        Enter Site
+      </button>
+    </div>
+  </div>
 
   <!-- Navbar -->
-  <nav class="bg-black text-white shadow p-4 flex justify-between items-center relative">
-    <a href="/" class="font-bold text-xl">TopMind</a>
+  <nav class="bg-black text-white shadow p-4 flex justify-between items-center relative z-[10000]" data-aos="fade-down">
+    <a href="/" onclick="sessionStorage.setItem('splashShown', 'true')" class="font-bold text-xl">TopMind</a>
 
-    <!-- Hamburger Icon (Mobile Only) -->
+    <!-- Hamburger Icon -->
     <div class="md:hidden">
       <button id="menuToggle" onclick="toggleMenu()" class="text-white text-3xl focus:outline-none">
         ☰
@@ -35,9 +70,7 @@
     <div id="navMenu" class="hidden absolute top-full left-0 w-full bg-black flex-col space-y-4 px-6 py-4 md:space-y-0 md:static md:flex md:flex-row md:space-x-4 md:px-0 md:py-0 md:items-center md:w-auto z-50">
       <!-- Close Icon (Mobile Only) -->
       <div class="flex justify-end md:hidden">
-        <button onclick="toggleMenu()" class="text-white text-2xl font-bold mb-2">
-          ×
-        </button>
+        <button onclick="toggleMenu()" class="text-white text-2xl font-bold mb-2">×</button>
       </div>
 
       <a href="/" class="hover:text-blue-500" onclick="closeMenu()">Home</a>
@@ -58,7 +91,7 @@
       {% endif %}
     </div>
 
-    <!-- Dark Mode Toggle Button -->
+    <!-- Dark Mode Toggle -->
     <button onclick="document.documentElement.classList.toggle('dark')" 
             class="bg-gray-800 text-white px-4 py-2 rounded shadow hover:bg-gray-700 hidden md:block">
       Toggle Dark
@@ -75,7 +108,7 @@
     id="adminLoginModal" 
     class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center hidden z-50"
   >
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 max-w-md w-full relative">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 max-w-md w-full relative" data-aos="zoom-in">
       <button 
         onclick="document.getElementById('adminLoginModal').classList.add('hidden')" 
         class="absolute top-2 right-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-bold text-xl"
@@ -114,26 +147,50 @@
     </div>
   </div>
 
-  <!-- Navbar Toggle Script -->
+  <!-- AOS & Menu Scripts -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>
+    AOS.init({ duration: 800, once: true });
+
     function toggleMenu() {
       const menu = document.getElementById('navMenu');
       const isOpen = menu.classList.contains('flex');
-      if (isOpen) {
-        menu.classList.remove('flex');
-        menu.classList.add('hidden');
-      } else {
-        menu.classList.remove('hidden');
-        menu.classList.add('flex');
-      }
+      menu.classList.toggle('hidden', isOpen);
+      menu.classList.toggle('flex', !isOpen);
     }
 
     function closeMenu() {
       const menu = document.getElementById('navMenu');
       if (window.innerWidth < 768) {
-        menu.classList.remove('flex');
         menu.classList.add('hidden');
+        menu.classList.remove('flex');
       }
+    }
+  </script>
+
+  <!-- Splash Screen Handling -->
+  <script>
+    const hasSeenSplash = sessionStorage.getItem("splashShown");
+    const splash = document.getElementById("splashScreen");
+
+    if (!hasSeenSplash && splash) {
+      const video = splash.querySelector("video");
+      if (video) {
+        video.src = "/static/images/splash screen.mp4";
+      }
+      document.body.classList.add("overflow-hidden");
+    } else {
+      splash.style.display = "none";
+    }
+
+    function enterSite() {
+      splash.classList.add("opacity-0");
+      splash.style.pointerEvents = "none";
+      setTimeout(() => {
+        splash.style.display = "none";
+        document.body.classList.remove("overflow-hidden");
+      }, 1000);
+      sessionStorage.setItem("splashShown", "true");
     }
   </script>
 
