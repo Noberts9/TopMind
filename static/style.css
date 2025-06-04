@@ -13,6 +13,10 @@ h1, h2, h3 {
   color: #1f2d3d;
 }
 
+.shadow, .shadow-md, .shadow-lg, .drop-shadow {
+  box-shadow: none !important;
+}
+
 /* Links */
 a {
   text-decoration: none;
@@ -140,4 +144,41 @@ body {
 .flash.info {
     background-color: #cce5ff;
     color: #004085;
+}
+/* ===== Responsive Video Wrapper ===== */
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+/* ===== Video Styling ===== */
+.video-wrapper video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Ensures video scales without cropping */
+  z-index: 1;
+}
+
+/* ===== Overlay Content (optional) ===== */
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.5); /* semi-transparent dark overlay */
+  color: #fff;
+  flex-direction: column;
 }
