@@ -72,8 +72,26 @@
   </div>
 </section>
 
+<div class="relative w-full h-[60vh] sm:h-[80vh] overflow-hidden">
+  <!-- Background Video -->
+  <video autoplay muted loop playsinline class="absolute top-0 left-0 w-full h-full object-cover z-0">
+    <source src="{{ url_for('static', filename='images/services banner.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Dark Overlay -->
+  <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-40 z-10"></div>
+
+  <!-- Centered Text Overlay -->
+  <div class="relative z-20 flex flex-col items-center justify-center text-center text-white h-full px-4">
+    <h2 class="text-3xl font-bold mb-4">Transforming Ideas into Impact</h2>
+    <p class="text-lg">Let’s build something great together.</p>
+  </div>
+</div>
+
+
 <!-- Bottom Banner -->
-<section class="bg-blue-600 text-white text-center py-10 rounded shadow-lg">
+<section class="bg-black text-white text-center py-10 rounded shadow-lg">
   <h2 class="text-3xl font-bold mb-2">Let’s Elevate Your Brand Together</h2>
   <p class="mb-4">Contact TopMind Agency today and take the first step towards measurable marketing success.</p>
   <a href="/contact" class="bg-white text-blue-600 px-6 py-2 font-semibold rounded hover:bg-gray-100">Get in Touch</a>
