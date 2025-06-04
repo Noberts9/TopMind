@@ -48,14 +48,23 @@
   </div>
 
   <!-- Clients Section -->
-  <section class="py-12 px-6 text-center bg-gray-800 text-white mt-12">
-    <h2 class="text-2xl font-bold mb-6"><span class="text-yellow-400">Our Clients</span></h2>
-    <div class="flex flex-wrap justify-center gap-6">
+<section class="py-12 px-6 bg-gray-800 text-white mt-12 overflow-hidden">
+  <h2 class="text-2xl font-bold mb-6 text-center" data-aos="fade-up">
+    <span class="text-yellow-400">Our Clients</span>
+  </h2>
+
+  <div class="relative w-full overflow-hidden">
+    <div class="flex animate-scroll whitespace-nowrap">
       {% for i in range(1, 10) %}
-      <img src="/static/images/client{{ i }}.jpg" class="h-12 grayscale hover:grayscale-0 transition object-contain" />
+        <img src="/static/images/client{{ i }}.jpg" class="h-12 grayscale hover:grayscale-0 mx-6 object-contain inline-block" />
+      {% endfor %}
+      <!-- Repeat for smooth infinite scroll -->
+      {% for i in range(1, 10) %}
+        <img src="/static/images/client{{ i }}.jpg" class="h-12 grayscale hover:grayscale-0 mx-6 object-contain inline-block" />
       {% endfor %}
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- Testimonials Section -->
   <section class="py-12 px-6 text-center bg-gray-700 text-white">
@@ -80,7 +89,7 @@
     <div>
       <h3 class="text-lg font-semibold mb-2"> <span class="text-yellow-400">Customer Care</span></h3>
       <p>Address: 429 St, Nairobi</p>
-      <p>Phone: <a href="tel:0710000000" class="text-blue-400 hover:underline">0713497021</a></p>
+      <p>Phone: <a href="tel:0710000000" class="text-blue-400 hover:underline">0707846262</a></p>
       <p>Email: <a href="mailto:support@topminds.com" class="text-blue-400 hover:underline">support@topminds.com</a></p>
       <p><a href="#" class="text-green-400 hover:underline">Ask your questions on WhatsApp</a></p>
     </div>
@@ -90,22 +99,32 @@
       <h3 class="text-lg font-semibold mb-2">Follow Us</h3>
       <p class="mb-2">Stay connected with our latest campaigns:</p>
       <div class="flex flex-wrap gap-4">
-        <a href="#" class="hover:text-blue-400 flex items-center space-x-1"><i class="fab fa-facebook-f"></i><span class="hidden sm:inline">Facebook</span></a>
-        <a href="#" class="hover:text-cyan-400 flex items-center space-x-1"><i class="fab fa-twitter"></i><span class="hidden sm:inline">Twitter</span></a>
-        <a href="#" class="hover:text-pink-400 flex items-center space-x-1"><i class="fab fa-instagram"></i><span class="hidden sm:inline">Instagram</span></a>
-        <a href="#" class="hover:text-red-400 flex items-center space-x-1"><i class="fab fa-youtube"></i><span class="hidden sm:inline">YouTube</span></a>
+        <a href="#" class="hover:text-blue-400 flex items-center space-x-1"><i class="fab fa-facebook-f"></i><span class="hidden sm:inline"></span></a>
+        <a href="#" class="hover:text-cyan-400 flex items-center space-x-1"><i class="fab fa-twitter"></i><span class="hidden sm:inline"></span></a>
+        <a href="#" class="hover:text-pink-400 flex items-center space-x-1"><i class="fab fa-instagram"></i><span class="hidden sm:inline"></span></a>
+        <a href="#" class="hover:text-red-400 flex items-center space-x-1"><i class="fab fa-youtube"></i><span class="hidden sm:inline"></span></a>
       </div>
     </div>
 
-    <!-- Subscribe -->
-    <div>
-      <h3 class="text-lg font-semibold mb-2">Subscribe to our emails</h3>
-      <p class="mb-2">Receive Offers & Product Drops</p>
-      <form action="#" method="post" class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
-        <input type="email" name="subscribe_email" placeholder="Email" class="p-2 border rounded w-full sm:w-auto flex-1 bg-gray-700 text-white border-gray-600" required>
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300">Subscribe</button>
+   <!-- Subscribe -->
+   <div>
+     <h3 class="text-lg font-semibold mb-2">Subscribe to our emails</h3>
+     <p class="mb-2">Receive Offers & Product Drops</p>
+      <form action="https://getform.io/f/akknnvva" method="POST" class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
+        <input 
+         type="email" 
+         name="email" 
+         placeholder="Email" 
+         class="p-2 border rounded w-full sm:w-auto flex-1 bg-gray-700 text-white border-gray-600" 
+         required>
+       <button 
+         type="submit" 
+         class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300">
+         Subscribe
+       </button>
       </form>
     </div>
+
   </div>
 
   <!-- Bottom Nav Menu -->
