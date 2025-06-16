@@ -1,11 +1,22 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 app = Flask(__name__)
-app.secret_key = 'SubaruwrxSTi'  # replace with a secure key for production
+app.secret_key = 'SubaruwrxSTi'  # Replace with a more secure key in production
 
-# Temporary message storage (resets on restart)
-temp_messages = []
+# Database configuration (change to PostgreSQL in production)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+# Database model
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(120), nullable=False)
+    message = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
 # ROUTES
 @app.route('/')
@@ -35,12 +46,9 @@ def contact():
             flash("All fields are required.", "danger")
             return redirect(url_for('contact'))
 
-        temp_messages.append({
-            "name": name,
-            "email": email,
-            "message": message,
-            "timestamp": datetime.utcnow()
-        })
+        new_msg = Message(name=name, email=email, message=message)
+        db.session.add(new_msg)
+        db.session.commit()
 
         flash('Message sent successfully!', 'success')
         return redirect(url_for('contact'))
@@ -65,13 +73,13 @@ def view_messages():
         flash("Please log in to access admin messages.", 'warning')
         return redirect(url_for('admin'))
 
-    # Pagination manually
+    # Pagination
     page = int(request.args.get('page', 1))
     per_page = 5
     skips = per_page * (page - 1)
 
-    paginated = temp_messages[::-1][skips:skips + per_page]
-    total = len(temp_messages)
+    total = Message.query.count()
+    paginated = Message.query.order_by(Message.timestamp.desc()).offset(skips).limit(per_page).all()
 
     return render_template('messages.html', messages=paginated, page=page, total=total, per_page=per_page)
 
@@ -82,4 +90,6 @@ def logout():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()  # Create DB tables if not exist
     app.run(debug=True)
